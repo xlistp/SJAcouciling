@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Parallax + Sticky Nav (Contain)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+            /* remove bounce */
+            margin: 0;
+            font-family: sans-serif;
+        }
+
+        #main-container {
+            position: absolute;
+            inset: 0;
+            overflow: auto;
+            /* we scroll this, not window */
+        }
+
+        nav {
+            @apply fixed top-0 left-0 w-full h-24 bg-gray-800 z-50 transition-colors duration-300 flex flex-col items-center justify-center;
+        }
+
+        .parallax-container {
+            margin-top: 6rem;
+            /* sit flush under 24-rem-tall nav */
+            height: 600px;
+            overflow: hidden;
+            background-repeat: no-repeat;
+            background-size: cover;
+            /* show the whole image */
+            background-position: center - 270px;
+            /* we'll update the Y offset */
+            /* fallback bg so you don't get white margins */
+            background-color: #000;
+        }
+    </style>
+</head>
+
+<body id="main-container">
+
+    <!-- fixed navbar -->
+    <nav id="navbar" class="fixed top-0 left-0 w-full h-24 bg-gray-800
+        transition-colors duration-300 flex flex-col items-center justify-center z-50">
+        <h1 class="text-white text-4xl font-bold">Welcome to GeneriCon 2023</h1>
+        <p class="text-gray-300">Join us for an unforgettable experience!</p>
+    </nav>
+
+
+    <!-- parallax banner -->
+    <div id="parallax-container" class="parallax-container" data-speed="0.4"
+        style="background-image: url('https://lh6.googleusercontent.com/BoJoKAmI96K2T5LuDP613Z8WELSPG1gUhKY9mVG0foNajomqk_xZAnPpUDx3DKTbNxMnvdIT5Yrzs6r1xlOsl5o=w16383');">
+    </div>
+
+    <!-- filler, for scrolling -->
+    <div class="h-[800px] bg-gray-200 p-4">
+        Scroll to see parallax & nav-color change.
+    </div>
+
+    <script>
+        const sc = document.getElementById('main-container');
+        const nav = document.getElementById('navbar');
+        const pc = document.getElementById('parallax-container');
+        const speed = parseFloat(pc.dataset.speed) || 0.7;
+
+        let latestY = 0, ticking = false;
+
+        sc.addEventListener('scroll', () => {
+            latestY = sc.scrollTop;
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    // update parallax
+                    const y = latestY * speed - 270;
+                    pc.style.backgroundPosition = `center ${y}px`;
+
+                    // update navbar color
+                    if (latestY > 0) {
+                        nav.classList.replace('bg-gray-800', 'bg-gray-900');
+                    } else {
+                        nav.classList.replace('bg-gray-900', 'bg-gray-800');
+                    }
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+    </script>
+
+</body>
+
+</html>
