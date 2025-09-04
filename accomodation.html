@@ -146,21 +146,49 @@
             </a>
         </div>
 
-        <!-- Search form -->
-        <form class="flex items-center space-x-2" role="search">
-        <input
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-            class="px-3 py-2 rounded-l bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        />
-        <button
-            type="submit"
-            class="px-4 py-2 bg-green-500 text-white rounded-r hover:bg-green-600 transition"
-        >
-            Search
-        </button>
-        </form>
+        <form id="searchForm" class="flex items-center space-x-2">
+            <input
+              id="searchInput"
+              list="searchOptions"
+              type="search"
+              placeholder="Search…"
+              class="px-3 py-2 rounded-l bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <datalist id="searchOptions">
+              <option value="Transportation">
+              <option value="Accommodation">
+              <option value="Sending Materials">
+              <option value="Schedule for Uni Reps">
+            </datalist>
+            <button
+              type="submit"
+              class="px-4 py-2 bg-green-500 text-white rounded-r hover:bg-green-600 transition"
+            >
+              Search
+            </button>
+          </form>
+        
+<!--
+        <form id="searchForm" class="flex items-center space-x-2">
+            <input
+              id="searchInput"
+              list="pages"
+              placeholder="Search"
+              class="px-3 py-2 rounded-l bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <datalist id="pages">
+              <option value="Transportation">
+              <option value="Accommodation">
+              <option value="Sending Materials">
+              <option value="Schedule for Uni Reps">
+            </datalist>
+            <button
+              type="submit"
+              class="px-4 py-2 bg-green-500 text-white rounded-r hover:bg-green-600 transition"
+            >
+              Search
+            </button>
+          </form>-->
     </div>
 
     <!-- Line 2: Nav links -->
@@ -180,14 +208,22 @@
             </a>
           
             <ul class="absolute hidden group-hover:block mt-2 bg-white text-black rounded shadow-lg z-50">
-                <li><a class="block px-4 py-2 hover:bg-gray-100" href="transportation.html">Transportation</a></li>
-                <li><a class="block px-4 py-2 hover:bg-gray-100" href="accomodation.html">Accommodation</a></li>
+              <li><a class="block px-4 py-2 hover:bg-gray-100" href="transportation.html">Transportation</a></li>
+              <li><a class="block px-4 py-2 hover:bg-gray-100" href="accomodation.html">Accommodation</a></li>
+              <li><a class="block px-4 py-2 hover:bg-gray-100" href="Sending.html">Sending Materials</a></li>
+              <li><a class="block px-4 py-2 hover:bg-gray-100" href="Shedule.html">Schedule for Uni Reps</a></li>
             </ul>
         </li>
 
         <li>
             <a href="reservation.html" class="text-gray-100 hover:text-gray-300">
                 Reservations
+            </a>
+        </li>
+
+        <li>
+            <a href="HSStudent.html" class="text-gray-100 hover:text-gray-300">
+                HSS Students
             </a>
         </li>
 
@@ -285,13 +321,64 @@
         <div class="border-t border-gray-700">
             <div class="max-w-4xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between text-sm text-gray-400">
               <span>© 2025 St. Johnsbury Academy Jeju. All rights reserved.</span>
-              <span>Made by Subin Erin Hur</span>
+              <span>Made by @24273720@sjajeju.kr</span>
             </div>
           </div>
       </footer>
             
-        
-        <!-- Bootstrap JS -->
+      <script>
+        const routes = {
+          'transportation':    'transportation.html',
+          'accommodation':     'accommodation.html',
+          'sending materials': 'sending-materials.html',
+          'schedule for uni reps': 'schedule.html'
+        };
+      
+        document.getElementById('searchForm')
+          .addEventListener('submit', e => {
+            e.preventDefault();
+            const val = document.getElementById('searchInput').value.trim().toLowerCase();
+      
+            // if there's an exact match in our map, go there:
+            if (routes[val]) {
+              window.location.href = routes[val];
+            } else {
+              // otherwise show a “not found” alert:
+              alert(`Sorry, no page found for “${val}.”`);
+            }
+          });
+      </script>
+
+        <!-- Bootstrap JS 
+
+        <script>
+            const form = document.getElementById('searchForm');
+            const input = document.getElementById('searchInput');
+          
+            // map your display names to URLs or anchors
+            const routes = {
+              'transportation': 'transportation.html',
+              'accommodation': 'accommodation.html',
+              'sending materials': 'sending-materials.html',
+              'schedule for uni reps': 'schedule.html'
+            };
+          
+            form.addEventListener('submit', e => {
+              e.preventDefault();
+              const term = input.value.trim().toLowerCase();
+              // find a key that starts with the term
+              const match = Object.keys(routes)
+                .find(key => key.startsWith(term));
+              
+              if (match) {
+                // navigate to the matching page
+                window.location.href = routes[match];
+              } else {
+                alert('No matching page found for: ' + input.value);
+              }
+            });
+          </script> -->
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-…"
                 crossorigin="anonymous"></script>
